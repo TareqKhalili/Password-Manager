@@ -1,0 +1,46 @@
+<%- include ('partials/header2') %> 
+    <div class="container">
+
+    <form action="/home/<%= id %>" method="POST">
+        <div class="input-group my-3">
+            <input type="text" class="form-control" placeholder="Generated Password Goes Here" name="generatedPassowrd" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+            <button class="btn btn-outline-success mx-2" type="submit" id="button-addon2">Generate</button>
+        </div>
+    </form>
+
+
+    
+    <table class="table table-striped table-success table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Application</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            <% data.forEach(elem => { %>
+                <tr>
+                    <td><%= elem.application %></td>
+                    <td><%= elem.username %></td>
+                    <td><%= elem.password %></td>
+                    <td>
+                        <div class="d-grid gap-2 justify-content-md-end">
+                            <form action="/home/<%= id %>/<%= elem.id %>?_method=DELETE"  class="w-75 " method="POST">
+                                <button type="submit" class="btn btn-outline-danger btn-sm m-0">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <% }); %> 
+        </tbody>
+      </table>
+
+
+
+        
+    </div>
+
+
+<%- include ('partials/footer') %> 

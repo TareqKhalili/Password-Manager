@@ -1,0 +1,24 @@
+<%- include('partials/header.ejs') %> 
+
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <form action="/login" method="POST" class="row g-3">
+          <div class="col-auto">
+              <input type="text" name="username" class="form-control" id="inputPassword2" placeholder="Username" required>
+          </div>
+          <div class="col-auto">
+            <input type="password" name="password" class="form-control" id="inputPassword2" placeholder="Password" required>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+          </div>
+          <div class="col-auto">
+            <a href="/signup">
+              <button type="button" class="btn btn-outline-success mb-3">Sign Up</button>
+            </a>
+          </div>      
+        </form>
+      </div>
+    </div>
+
+<%- include('partials/footer.ejs') %> 
