@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const config = require('./config')
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const passwordDB = require('./models/password');
@@ -12,7 +11,23 @@ const passportLocal = require('passport-local');
 
 let data = [];
 
-mongoose.connect(config.db.connection, {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true });
+let config;
+
+try {
+    config = require('./config');
+} catch (error) {
+    console.log("your are not working localy");
+    console.log(error);
+}
+
+
+try {
+    mongoose.connect(config.db.connection, {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true });
+} catch (error) {
+    console.log("could not connect using config!");
+    mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true });
+}
+
 
 
 app.set('view engine', 'ejs');
@@ -20,12 +35,12 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(expressSession({ 
-    secret: "dulhqwdqwidioqwjdfioqwjfipopoqwjpojqfwpoj",
+    secret: process.env.ES_SECRET || config.expressSession.secret,
     resave: false,
     saveUninitialized: false
  }));
 
- 
+
 
 app.use(passport.initialize());
 app.use(passport.session()); // allows persistent sesions 
@@ -142,5 +157,5 @@ app.get('/logout', (req, res) => {
 })
 
 
-app.listen('8080')
+app.listen(process.env.PORT || '8080');
 
